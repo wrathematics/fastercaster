@@ -1,0 +1,29 @@
+---
+title: "fastercaster Benchmarks"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Vignette Title}
+  \usepackage[utf8]{inputenc}
+---
+```{r, echo=TRUE, eval=TRUE}
+library(rbenchmark)
+library(fastercaster)
+
+bench <- function(...) benchmark(..., columns=c("test", "replications", "elapsed", "relative"), order="relative")
+
+n <- 1e5
+x <- factor(sample(1:3, size=n, replace=TRUE))
+benchmark(as_numeric(x), as.numeric(as.character(x)))
+benchmark(as_integer(x), as.integer(as.character(x)))
+benchmark(as_numeric(x, by.level=FALSE), as.numeric(x))
+benchmark(as_integer(x, by.level=FALSE), as.integer(x))
+
+
+x <- factor(sample(rnorm(10), size=n, replace=TRUE))
+benchmark(as_numeric(x), as.numeric(as.character(x)))
+benchmark(as_integer(x), as.integer(as.character(x)))
+benchmark(as_numeric(x, by.level=FALSE), as.numeric(x))
+benchmark(as_integer(x, by.level=FALSE), as.integer(x))
+```
+
